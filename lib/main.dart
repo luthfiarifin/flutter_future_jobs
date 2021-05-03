@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/pages/on_boarding_page.dart';
 import 'package:flutter_future_jobs/pages/splash_page.dart';
 
 void main() {
@@ -11,7 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      routes: {
+        '/': (context) => SplashPage(),
+        '/on_boarding': (context) => OnBoardingPage(),
+      },
     );
   }
 }
