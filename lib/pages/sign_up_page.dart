@@ -159,6 +159,7 @@ class _SignUpPageState extends State<SignUpPage> {
             TextFormField(
               controller: passwordController,
               cursorColor: primaryColor,
+              obscureText: true,
               onChanged: (value) {
                 setState(() {});
               },
