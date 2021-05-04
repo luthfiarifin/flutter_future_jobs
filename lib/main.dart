@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_future_jobs/pages/on_boarding_page.dart';
+import 'package:flutter_future_jobs/pages/sign_in_page.dart';
 import 'package:flutter_future_jobs/pages/sign_up_page.dart';
 import 'package:flutter_future_jobs/pages/splash_page.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashPage(),
         '/on_boarding': (context) => OnBoardingPage(),
         '/sign_up': (context) => SignUpPage(),
+        '/sign_in': (context) => SignInPage(),
       },
     );
   }

@@ -259,7 +259,9 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         child: Center(
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/sign_in');
+            },
             child: Text(
               'Back to Sign In',
               style: greyTextStyle.copyWith(

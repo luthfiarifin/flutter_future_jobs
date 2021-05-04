@@ -67,7 +67,9 @@ class OnBoardingPage extends StatelessWidget {
                       width: 200,
                       height: 45,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/sign_in');
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: transparentColor,
                           shape: RoundedRectangleBorder(
