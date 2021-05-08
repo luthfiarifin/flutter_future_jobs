@@ -4,6 +4,8 @@ import 'package:flutter_future_jobs/pages/sign_in_page.dart';
 import 'package:flutter_future_jobs/pages/sign_up_page.dart';
 import 'package:flutter_future_jobs/pages/splash_page.dart';
 
+import 'pages/home_page.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/on_boarding': (context) => OnBoardingPage(),
         '/sign_up': (context) => SignUpPage(),
         '/sign_in': (context) => SignInPage(),
+        '/home': (context) => HomePage(),
       },
     );
   }
