@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_future_jobs/pages/category_page.dart';
-import 'package:flutter_future_jobs/pages/on_boarding_page.dart';
-import 'package:flutter_future_jobs/pages/sign_in_page.dart';
-import 'package:flutter_future_jobs/pages/sign_up_page.dart';
-import 'package:flutter_future_jobs/pages/splash_page.dart';
 
+import 'pages/category_page.dart';
+import 'pages/on_boarding_page.dart';
+import 'pages/sign_in_page.dart';
+import 'pages/sign_up_page.dart';
+import 'pages/splash_page.dart';
+import 'pages/detail_page.dart';
 import 'pages/home_page.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/sign_in': (context) => SignInPage(),
         '/home': (context) => HomePage(),
         '/category': (context) => CategoryPage(),
+        '/detail': (context) => DetailPage(),
       },
     );
   }

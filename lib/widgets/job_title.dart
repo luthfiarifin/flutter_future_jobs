@@ -11,47 +11,52 @@ class JobTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.asset(
-          companyLogo,
-          width: 44,
-        ),
-        SizedBox(
-          width: 24,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                jobTitle,
-                style: blackTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: medium,
-                ),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                companyName,
-                style: greyTextStyle,
-              ),
-              SizedBox(
-                height: 18,
-              ),
-              Divider(
-                thickness: 1,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/detail');
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            companyLogo,
+            width: 44,
           ),
-        )
-      ],
+          SizedBox(
+            width: 24,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  jobTitle,
+                  style: blackTextStyle.copyWith(
+                    fontSize: 16,
+                    fontWeight: medium,
+                  ),
+                ),
+                SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  companyName,
+                  style: greyTextStyle,
+                ),
+                SizedBox(
+                  height: 18,
+                ),
+                Divider(
+                  thickness: 1,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
