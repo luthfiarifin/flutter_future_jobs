@@ -259,6 +259,14 @@ class _SignUpPageState extends State<SignUpPage> {
         width: double.infinity,
         child: TextButton(
           onPressed: () async {
+            if (emailController.text.isEmpty ||
+                nameController.text.isEmpty ||
+                passwordController.text.isEmpty ||
+                goalController.text.isEmpty) {
+              showError('All field must be filled');
+              return;
+            }
+
             UserModel user = await authProvider.register(
               emailController.text,
               passwordController.text,
