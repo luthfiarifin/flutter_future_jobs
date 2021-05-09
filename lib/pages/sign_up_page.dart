@@ -31,6 +31,8 @@ class _SignUpPageState extends State<SignUpPage> {
       );
     }
 
+    bool isLoading = false;
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -257,41 +259,53 @@ class _SignUpPageState extends State<SignUpPage> {
         margin: EdgeInsets.only(top: 40),
         height: 45,
         width: double.infinity,
-        child: TextButton(
-          onPressed: () async {
-            if (emailController.text.isEmpty ||
-                nameController.text.isEmpty ||
-                passwordController.text.isEmpty ||
-                goalController.text.isEmpty) {
-              showError('All field must be filled');
-              return;
-            }
+        child: isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : TextButton(
+                onPressed: () async {
+                  if (emailController.text.isEmpty ||
+                      nameController.text.isEmpty ||
+                      passwordController.text.isEmpty ||
+                      goalController.text.isEmpty) {
+                    showError('All field must be filled');
+                    return;
+                  }
 
-            UserModel user = await authProvider.register(
-              emailController.text,
-              passwordController.text,
-              nameController.text,
-              goalController.text,
-            );
+                  setState(() {
+                    isLoading = true;
+                  });
 
-            if (user != null) {
-              userProvider.user = user;
-              Navigator.pushNamed(context, '/home');
-            } else {
-              showError('Email has been used');
-            }
-          },
-          style: TextButton.styleFrom(
-              backgroundColor: primaryColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(66))),
-          child: Text(
-            'Sign Up',
-            style: whiteTextStyle.copyWith(
-              fontWeight: medium,
-            ),
-          ),
-        ),
+                  UserModel user = await authProvider.register(
+                    emailController.text,
+                    passwordController.text,
+                    nameController.text,
+                    goalController.text,
+                  );
+
+                  setState(() {
+                    isLoading = false;
+                  });
+
+                  if (user != null) {
+                    userProvider.user = user;
+                    Navigator.pushNamed(context, '/home');
+                  } else {
+                    showError('Email has been used');
+                  }
+                },
+                style: TextButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(66))),
+                child: Text(
+                  'Sign Up',
+                  style: whiteTextStyle.copyWith(
+                    fontWeight: medium,
+                  ),
+                ),
+              ),
       );
     }
 
