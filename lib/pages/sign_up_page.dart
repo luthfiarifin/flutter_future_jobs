@@ -1,6 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/models/user_model.dart';
+import 'package:flutter_future_jobs/providers/auth_provider.dart';
+import 'package:flutter_future_jobs/providers/user_provider.dart';
 import 'package:flutter_future_jobs/theme.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -15,6 +19,18 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    var authProvider = Provider.of<AuthProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+
+    void showError(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redColor,
+          content: Text(message),
+        ),
+      );
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -242,8 +258,20 @@ class _SignUpPageState extends State<SignUpPage> {
         height: 45,
         width: double.infinity,
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
+          onPressed: () async {
+            UserModel user = await authProvider.register(
+              emailController.text,
+              passwordController.text,
+              nameController.text,
+              goalController.text,
+            );
+
+            if (user != null) {
+              userProvider.user = user;
+              Navigator.pushNamed(context, '/home');
+            } else {
+              showError('Email has been used');
+            }
           },
           style: TextButton.styleFrom(
               backgroundColor: primaryColor,
