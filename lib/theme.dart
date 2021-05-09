@@ -10,6 +10,7 @@ Color whiteColor = Color(0xffFFFFFF);
 Color transparentColor = Colors.transparent;
 Color greyColor = Color(0xffB3B5C4);
 Color blackColor = Color(0xff272C2F);
+Color redColor = Color(0xffFD4F56);
 
 // Note: Text Styles
 TextStyle whiteTextStyle = GoogleFonts.poppins(
