@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_future_jobs/theme.dart';
 
@@ -120,23 +121,28 @@ class _SignUpPageState extends State<SignUpPage> {
                 setState(() {});
               },
               decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.only(left: 28, bottom: 20, top: 20),
-                  fillColor: Color(0xffF1F0F5),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide.none,
+                contentPadding: EdgeInsets.only(left: 28, bottom: 20, top: 20),
+                fillColor: Color(0xffF1F0F5),
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: EmailValidator.validate(emailController.text)
+                        ? primaryColor
+                        : redColor,
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: primaryColor,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  )),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              style: EmailValidator.validate(emailController.text)
+                  ? purpleTextStyle
+                  : redTextStyle,
             )
           ],
         ),
