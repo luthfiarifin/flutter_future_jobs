@@ -17,6 +17,8 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController(text: '');
   TextEditingController goalController = TextEditingController(text: '');
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     var authProvider = Provider.of<AuthProvider>(context);
@@ -30,8 +32,6 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
     }
-
-    bool isLoading = false;
 
     Widget header() {
       return Container(
