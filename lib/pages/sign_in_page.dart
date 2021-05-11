@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/models/user_model.dart';
+import 'package:flutter_future_jobs/providers/auth_provider.dart';
+import 'package:flutter_future_jobs/providers/user_provider.dart';
 import 'package:flutter_future_jobs/theme.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -10,8 +14,22 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController emailController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    var authProvider = Provider.of<AuthProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+
+    void showError(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: redColor,
+          content: Text(message),
+        ),
+      );
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -69,8 +87,7 @@ class _SignInPageState extends State<SignInPage> {
                 setState(() {});
               },
               decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.only(left: 28, bottom: 8, top: 8),
+                  contentPadding: EdgeInsets.only(left: 28, bottom: 8, top: 8),
                   fillColor: Color(0xffF1F0F5),
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -113,8 +130,7 @@ class _SignInPageState extends State<SignInPage> {
                 setState(() {});
               },
               decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.only(left: 28, bottom: 8, top: 8),
+                  contentPadding: EdgeInsets.only(left: 28, bottom: 8, top: 8),
                   fillColor: Color(0xffF1F0F5),
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -141,19 +157,49 @@ class _SignInPageState extends State<SignInPage> {
         margin: EdgeInsets.only(top: 40, bottom: 20),
         height: 45,
         width: double.infinity,
-        child: TextButton(
-          onPressed: () {},
-          style: TextButton.styleFrom(
-              backgroundColor: primaryColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(66))),
-          child: Text(
-            'Sign In',
-            style: whiteTextStyle.copyWith(
-              fontWeight: medium,
-            ),
-          ),
-        ),
+        child: isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : TextButton(
+                onPressed: () async {
+                  if (emailController.text.isEmpty ||
+                      passwordController.text.isEmpty) {
+                    showError('All field must be filled');
+                    return;
+                  }
+
+                  setState(() {
+                    isLoading = true;
+                  });
+
+                  UserModel user = await authProvider.login(
+                    emailController.text,
+                    passwordController.text,
+                  );
+
+                  setState(() {
+                    isLoading = false;
+                  });
+
+                  if (user != null) {
+                    userProvider.user = user;
+                    Navigator.pushNamed(context, '/home');
+                  } else {
+                    showError('Wrong email or password');
+                  }
+                },
+                style: TextButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(66))),
+                child: Text(
+                  'Sign In',
+                  style: whiteTextStyle.copyWith(
+                    fontWeight: medium,
+                  ),
+                ),
+              ),
       );
     }
 
