@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/models/job_model.dart';
 import 'package:flutter_future_jobs/theme.dart';
 
 class JobTitle extends StatelessWidget {
-  final String jobTitle;
-  final String companyName;
-  final String companyLogo;
+  final JobModel job;
 
-  const JobTitle({this.jobTitle, this.companyName, this.companyLogo, Key key})
-      : super(key: key);
+  const JobTitle(this.job, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class JobTitle extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            companyLogo,
+            job.companyLogo,
             width: 44,
           ),
           SizedBox(
@@ -30,7 +28,7 @@ class JobTitle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  jobTitle,
+                  job.name,
                   style: blackTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,
@@ -40,7 +38,7 @@ class JobTitle extends StatelessWidget {
                   height: 2,
                 ),
                 Text(
-                  companyName,
+                  job.companyName,
                   style: greyTextStyle,
                 ),
                 SizedBox(

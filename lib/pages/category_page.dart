@@ -81,13 +81,8 @@ class CategoryPage extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Column(
-                    children: snapshot.data
-                        .map((job) => JobTitle(
-                              jobTitle: job.name,
-                              companyName: job.companyName,
-                              companyLogo: job.companyLogo,
-                            ))
-                        .toList(),
+                    children:
+                        snapshot.data.map((job) => JobTitle(job)).toList(),
                   );
                 } else {
                   return Center(
@@ -125,13 +120,8 @@ class CategoryPage extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Column(
-                    children: snapshot.data
-                        .map((job) => JobTitle(
-                              jobTitle: job.name,
-                              companyName: job.companyName,
-                              companyLogo: job.companyLogo,
-                            ))
-                        .toList(),
+                    children:
+                        snapshot.data.map((job) => JobTitle(job)).toList(),
                   );
                 } else {
                   return Center(

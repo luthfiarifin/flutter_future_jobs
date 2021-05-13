@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/models/category_model.dart';
 import 'package:flutter_future_jobs/pages/category_page.dart';
 import 'package:flutter_future_jobs/theme.dart';
 
 class CategoryCard extends StatelessWidget {
-  final String jobTitle;
-  final String imagePath;
+  final CategoryModel category;
 
-  const CategoryCard({this.jobTitle, this.imagePath, Key key})
-      : super(key: key);
+  const CategoryCard(this.category, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +17,8 @@ class CategoryCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => CategoryPage(
-              jobTitle: this.jobTitle,
-              imagePath: this.imagePath,
+              jobTitle: category.name,
+              imagePath: category.imageUrl,
             ),
           ),
         );
@@ -32,14 +31,14 @@ class CategoryCard extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(
-              imagePath,
+              category.imageUrl,
             ),
           ),
         ),
         child: Align(
           alignment: AlignmentDirectional.bottomStart,
           child: Text(
-            jobTitle,
+            category.name,
             style: whiteTextStyle.copyWith(
               fontSize: 18,
               fontWeight: medium,
