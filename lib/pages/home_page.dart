@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/providers/user_provider.dart';
 import 'package:flutter_future_jobs/widgets/category_card.dart';
 import 'package:flutter_future_jobs/widgets/job_title.dart';
+import 'package:provider/provider.dart';
 
 import '../theme.dart';
 
@@ -10,6 +12,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<UserProvider>(context);
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
@@ -30,7 +34,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Jason Powel',
+                  userProvider.user.name,
                   style: blackTextStyle.copyWith(
                     fontWeight: semiBold,
                     fontSize: 24,
