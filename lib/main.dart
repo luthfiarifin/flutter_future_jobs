@@ -6,12 +6,11 @@ import 'package:flutter_future_jobs/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/category_page.dart';
+import 'pages/home_page.dart';
 import 'pages/on_boarding_page.dart';
 import 'pages/sign_in_page.dart';
 import 'pages/sign_up_page.dart';
 import 'pages/splash_page.dart';
-import 'pages/detail_page.dart';
-import 'pages/home_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,7 +44,6 @@ class MyApp extends StatelessWidget {
           '/sign_in': (context) => SignInPage(),
           '/home': (context) => HomePage(),
           '/category': (context) => CategoryPage(),
-          '/detail': (context) => DetailPage(),
         },
       ),
     );

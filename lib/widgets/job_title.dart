@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_future_jobs/models/job_model.dart';
+import 'package:flutter_future_jobs/pages/detail_page.dart';
 import 'package:flutter_future_jobs/theme.dart';
 
 class JobTitle extends StatelessWidget {
@@ -11,7 +12,12 @@ class JobTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/detail');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(job),
+          ),
+        );
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
