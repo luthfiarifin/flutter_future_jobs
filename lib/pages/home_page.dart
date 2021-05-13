@@ -93,44 +93,21 @@ class HomePage extends StatelessWidget {
 
                   return ListView(
                     scrollDirection: Axis.horizontal,
-                    children: snapshot.data.map((category) {
-                      index++;
+                    children: snapshot.data.map(
+                      (category) {
+                        index++;
 
-                      return Container(
-                        margin: EdgeInsets.only(
-                          left: index == 0 ? defaultMargin : 0,
-                        ),
-                        child: CategoryCard(
-                          jobTitle: category.name,
-                          imagePath: category.imageUrl,
-                        ),
-                      );
-                    }).toList(),
-                    // [
-                    //   CategoryCard(
-                    //     jobTitle: 'Web Developer',
-                    //     imagePath: 'assets/image_category1.png',
-                    //   ),
-                    //   CategoryCard(
-                    //     jobTitle: 'Mobile Developer',
-                    //     imagePath: 'assets/image_category2.png',
-                    //   ),
-                    //   CategoryCard(
-                    //     jobTitle: 'App Designer',
-                    //     imagePath: 'assets/image_category3.png',
-                    //   ),
-                    //   CategoryCard(
-                    //     jobTitle: 'Content Writer',
-                    //     imagePath: 'assets/image_category4.png',
-                    //   ),
-                    //   CategoryCard(
-                    //     jobTitle: 'Video Grapher',
-                    //     imagePath: 'assets/image_category5.png',
-                    //   ),
-                    //   SizedBox(
-                    //     width: defaultMargin,
-                    //   ),
-                    // ],
+                        return Container(
+                          margin: EdgeInsets.only(
+                            left: index == 0 ? defaultMargin : 0,
+                          ),
+                          child: CategoryCard(
+                            jobTitle: category.name,
+                            imagePath: category.imageUrl,
+                          ),
+                        );
+                      },
+                    ).toList(),
                   );
                 } else {
                   return Center(
@@ -164,39 +141,25 @@ class HomePage extends StatelessWidget {
               height: 24,
             ),
             FutureBuilder<List<JobModel>>(
-                future: jobProvider.getJobs(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return Column(
-                      children: snapshot.data
-                          .map((job) => JobTitle(
-                                jobTitle: job.name,
-                                companyName: job.companyName,
-                                companyLogo: job.companyLogo,
-                              ))
-                          .toList(),
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                })
-            // JobTitle(
-            //   jobTitle: 'Front-End Developer',
-            //   companyName: 'Google',
-            //   companyLogo: 'assets/icon_google.png',
-            // ),
-            // JobTitle(
-            //   jobTitle: 'UI Designer',
-            //   companyName: 'Instagram',
-            //   companyLogo: 'assets/icon_instagram.png',
-            // ),
-            // JobTitle(
-            //   jobTitle: 'Data Scientist',
-            //   companyName: 'Facebook',
-            //   companyLogo: 'assets/icon_facebook.png',
-            // )
+              future: jobProvider.getJobs(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Column(
+                    children: snapshot.data
+                        .map((job) => JobTitle(
+                              jobTitle: job.name,
+                              companyName: job.companyName,
+                              companyLogo: job.companyLogo,
+                            ))
+                        .toList(),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
           ],
         ),
       );

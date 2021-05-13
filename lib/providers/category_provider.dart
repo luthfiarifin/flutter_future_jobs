@@ -7,20 +7,16 @@ import 'package:http/http.dart' as http;
 class CategoryProvider with ChangeNotifier {
   Future<List<CategoryModel>> getCategories() async {
     try {
-      var response =
-          await http.get(Uri.parse('https://bwa-jobs.herokuapp.com/categories'));
+      var response = await http
+          .get(Uri.parse('https://bwa-jobs.herokuapp.com/categories'));
 
       if (response.statusCode == 200) {
         List<CategoryModel> categories = [];
         List parsedJson = jsonDecode(response.body);
 
-        print(parsedJson);
-
         parsedJson.forEach((model) {
-          print(model);
           categories.add(CategoryModel.fromJson(model));
         });
-        print(categories);
 
         return categories;
       } else {
