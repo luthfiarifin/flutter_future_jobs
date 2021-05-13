@@ -28,10 +28,10 @@ class CategoryCard extends StatelessWidget {
         width: 150,
         height: 200,
         padding: EdgeInsets.all(16),
-        margin: EdgeInsets.only(left: defaultMargin),
+        margin: EdgeInsets.only(right: defaultMargin),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
+            image: NetworkImage(
               imagePath,
             ),
           ),

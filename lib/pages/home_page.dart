@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/models/category_model.dart';
+import 'package:flutter_future_jobs/providers/category_provider.dart';
 import 'package:flutter_future_jobs/providers/user_provider.dart';
 import 'package:flutter_future_jobs/widgets/category_card.dart';
 import 'package:flutter_future_jobs/widgets/job_title.dart';
@@ -13,6 +15,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
+    var categoryProvider = Provider.of<CategoryProvider>(context);
 
     Widget header() {
       return Container(
@@ -79,33 +82,59 @@ class HomePage extends StatelessWidget {
           ),
           Container(
             height: 200,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                CategoryCard(
-                  jobTitle: 'Web Developer',
-                  imagePath: 'assets/image_category1.png',
-                ),
-                CategoryCard(
-                  jobTitle: 'Mobile Developer',
-                  imagePath: 'assets/image_category2.png',
-                ),
-                CategoryCard(
-                  jobTitle: 'App Designer',
-                  imagePath: 'assets/image_category3.png',
-                ),
-                CategoryCard(
-                  jobTitle: 'Content Writer',
-                  imagePath: 'assets/image_category4.png',
-                ),
-                CategoryCard(
-                  jobTitle: 'Video Grapher',
-                  imagePath: 'assets/image_category5.png',
-                ),
-                SizedBox(
-                  width: defaultMargin,
-                ),
-              ],
+            child: FutureBuilder<List<CategoryModel>>(
+              future: categoryProvider.getCategories(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  int index = -1;
+
+                  return ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: snapshot.data.map((category) {
+                      index++;
+
+                      return Container(
+                        margin: EdgeInsets.only(
+                          left: index == 0 ? defaultMargin : 0,
+                        ),
+                        child: CategoryCard(
+                          jobTitle: category.name,
+                          imagePath: category.imageUrl,
+                        ),
+                      );
+                    }).toList(),
+                    // [
+                    //   CategoryCard(
+                    //     jobTitle: 'Web Developer',
+                    //     imagePath: 'assets/image_category1.png',
+                    //   ),
+                    //   CategoryCard(
+                    //     jobTitle: 'Mobile Developer',
+                    //     imagePath: 'assets/image_category2.png',
+                    //   ),
+                    //   CategoryCard(
+                    //     jobTitle: 'App Designer',
+                    //     imagePath: 'assets/image_category3.png',
+                    //   ),
+                    //   CategoryCard(
+                    //     jobTitle: 'Content Writer',
+                    //     imagePath: 'assets/image_category4.png',
+                    //   ),
+                    //   CategoryCard(
+                    //     jobTitle: 'Video Grapher',
+                    //     imagePath: 'assets/image_category5.png',
+                    //   ),
+                    //   SizedBox(
+                    //     width: defaultMargin,
+                    //   ),
+                    // ],
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
           )
         ],
