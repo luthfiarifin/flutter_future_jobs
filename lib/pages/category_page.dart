@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_future_jobs/models/job_model.dart';
+import 'package:flutter_future_jobs/providers/job_provider.dart';
 import 'package:flutter_future_jobs/theme.dart';
 import 'package:flutter_future_jobs/widgets/job_title.dart';
+import 'package:provider/provider.dart';
 
 class CategoryPage extends StatelessWidget {
   final String jobTitle;
@@ -11,6 +14,8 @@ class CategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var jobProvider = Provider.of<JobProvider>(context);
+
     Widget header() {
       return Container(
         width: double.infinity,
@@ -22,7 +27,7 @@ class CategoryPage extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(
+            image: NetworkImage(
               imagePath,
             ),
           ),
@@ -71,21 +76,26 @@ class CategoryPage extends StatelessWidget {
             SizedBox(
               height: 24,
             ),
-            JobTitle(
-              jobTitle: 'Front-End Developer',
-              companyName: 'Google',
-              companyLogo: 'assets/icon_google.png',
+            FutureBuilder<List<JobModel>>(
+              future: jobProvider.getJobs(category: jobTitle),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Column(
+                    children: snapshot.data
+                        .map((job) => JobTitle(
+                              jobTitle: job.name,
+                              companyName: job.companyName,
+                              companyLogo: job.companyLogo,
+                            ))
+                        .toList(),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
-            JobTitle(
-              jobTitle: 'UI Designer',
-              companyName: 'Instagram',
-              companyLogo: 'assets/icon_instagram.png',
-            ),
-            JobTitle(
-              jobTitle: 'Data Scientist',
-              companyName: 'Facebook',
-              companyLogo: 'assets/icon_facebook.png',
-            )
           ],
         ),
       );
@@ -110,21 +120,26 @@ class CategoryPage extends StatelessWidget {
             SizedBox(
               height: 24,
             ),
-            JobTitle(
-              jobTitle: 'Front-End Developer',
-              companyName: 'Google',
-              companyLogo: 'assets/icon_google.png',
+            FutureBuilder<List<JobModel>>(
+              future: jobProvider.getJobs(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Column(
+                    children: snapshot.data
+                        .map((job) => JobTitle(
+                              jobTitle: job.name,
+                              companyName: job.companyName,
+                              companyLogo: job.companyLogo,
+                            ))
+                        .toList(),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             ),
-            JobTitle(
-              jobTitle: 'UI Designer',
-              companyName: 'Instagram',
-              companyLogo: 'assets/icon_instagram.png',
-            ),
-            JobTitle(
-              jobTitle: 'Data Scientist',
-              companyName: 'Facebook',
-              companyLogo: 'assets/icon_facebook.png',
-            )
           ],
         ),
       );

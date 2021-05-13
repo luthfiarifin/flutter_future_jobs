@@ -5,10 +5,10 @@ import 'package:flutter_future_jobs/models/job_model.dart';
 import 'package:http/http.dart' as http;
 
 class JobProvider with ChangeNotifier {
-  Future<List<JobModel>> getJobs() async {
+  Future<List<JobModel>> getJobs({String category}) async {
     try {
       var response =
-          await http.get(Uri.parse('https://bwa-jobs.herokuapp.com/jobs'));
+          await http.get(Uri.parse(category == null ? 'https://bwa-jobs.herokuapp.com/jobs' : 'https://bwa-jobs.herokuapp.com/jobs?category=$category'));
 
       if (response.statusCode == 200) {
         List<JobModel> categories = [];
