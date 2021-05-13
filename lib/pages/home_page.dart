@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_future_jobs/models/category_model.dart';
+import 'package:flutter_future_jobs/models/job_model.dart';
 import 'package:flutter_future_jobs/providers/category_provider.dart';
+import 'package:flutter_future_jobs/providers/job_provider.dart';
 import 'package:flutter_future_jobs/providers/user_provider.dart';
 import 'package:flutter_future_jobs/widgets/category_card.dart';
 import 'package:flutter_future_jobs/widgets/job_title.dart';
@@ -16,6 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var userProvider = Provider.of<UserProvider>(context);
     var categoryProvider = Provider.of<CategoryProvider>(context);
+    var jobProvider = Provider.of<JobProvider>(context);
 
     Widget header() {
       return Container(
@@ -160,21 +163,40 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 24,
             ),
-            JobTitle(
-              jobTitle: 'Front-End Developer',
-              companyName: 'Google',
-              companyLogo: 'assets/icon_google.png',
-            ),
-            JobTitle(
-              jobTitle: 'UI Designer',
-              companyName: 'Instagram',
-              companyLogo: 'assets/icon_instagram.png',
-            ),
-            JobTitle(
-              jobTitle: 'Data Scientist',
-              companyName: 'Facebook',
-              companyLogo: 'assets/icon_facebook.png',
-            )
+            FutureBuilder<List<JobModel>>(
+                future: jobProvider.getJobs(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Column(
+                      children: snapshot.data
+                          .map((job) => JobTitle(
+                                jobTitle: job.name,
+                                companyName: job.companyName,
+                                companyLogo: job.companyLogo,
+                              ))
+                          .toList(),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                })
+            // JobTitle(
+            //   jobTitle: 'Front-End Developer',
+            //   companyName: 'Google',
+            //   companyLogo: 'assets/icon_google.png',
+            // ),
+            // JobTitle(
+            //   jobTitle: 'UI Designer',
+            //   companyName: 'Instagram',
+            //   companyLogo: 'assets/icon_instagram.png',
+            // ),
+            // JobTitle(
+            //   jobTitle: 'Data Scientist',
+            //   companyName: 'Facebook',
+            //   companyLogo: 'assets/icon_facebook.png',
+            // )
           ],
         ),
       );

@@ -18,7 +18,7 @@ class JobTitle extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             companyLogo,
             width: 44,
           ),
